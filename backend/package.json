@@ -1,0 +1,26 @@
+{
+  "name": "velox",
+  "version": "1.0.0",
+  "description": "Provably fair crash app",
+  "license": "ISC",
+  "author": "Brian Gatundu",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.11",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
