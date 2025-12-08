@@ -44,44 +44,6 @@ export class MultiplierGenerator {
   };
 
   /**
-   * Generates a cryptographically secure server seed and its hash
-   * The hash is used to prove fairness before the game round starts
-   */
-  public generatedServerSeed(): string {
-    const serverSeed = crypto
-      .randomBytes(32)
-      .toString(MultiplierGenerator.CONFIG.encodingFormat);
-
-    const hashedServerSeed = crypto
-      .createHash(MultiplierGenerator.CONFIG.hashingAlgorithm)
-      .update(serverSeed)
-      .digest(MultiplierGenerator.CONFIG.encodingFormat);
-
-    this.multiplierState.serverSeed = serverSeed;
-    this.multiplierState.hashedServerSeed = hashedServerSeed;
-
-    return serverSeed;
-  }
-
-  /**
-   * Generates the final multiplier result using server and client seeds
-   */
-  public generateFinalResults(params: {
-    clientSeed: string;
-    clientSeedDetails: ClientSeedDetailsI[];
-  }): number {
-    this.validateClientSeed(params.clientSeed);
-
-    this.multiplierState.clientSeed = params.clientSeed.trim();
-    this.multiplierState.clientSeedDetails = params.clientSeedDetails;
-
-    this.generateHash();
-    const finalMultiplier = this.calculateMultiplier();
-
-    return finalMultiplier;
-  }
-
-  /**
    * Generates the hash by combining server and client seeds
    * This hash is used to calculate the final multiplier
    */
@@ -181,5 +143,47 @@ export class MultiplierGenerator {
     if (clientSeed.length > 75) {
       throw new Error("Client seed is too long (max 75 characters)");
     }
+  }
+
+  /**
+   * Generates a cryptographically secure server seed and its hash
+   * The hash is used to prove fairness before the game round starts
+   */
+  public generateServerSeed(): string {
+    const serverSeed = crypto
+      .randomBytes(32)
+      .toString(MultiplierGenerator.CONFIG.encodingFormat);
+
+    const hashedServerSeed = crypto
+      .createHash(MultiplierGenerator.CONFIG.hashingAlgorithm)
+      .update(serverSeed)
+      .digest(MultiplierGenerator.CONFIG.encodingFormat);
+
+    this.multiplierState.serverSeed = serverSeed;
+    this.multiplierState.hashedServerSeed = hashedServerSeed;
+
+    return serverSeed;
+  }
+
+  /**
+   * Generates the final multiplier result using server and client seeds
+   */
+  public generateFinalResults(params: {
+    clientSeed: string;
+    clientSeedDetails: ClientSeedDetailsI[];
+  }): number {
+    this.validateClientSeed(params.clientSeed);
+
+    this.multiplierState.clientSeed = params.clientSeed.trim();
+    this.multiplierState.clientSeedDetails = params.clientSeedDetails;
+
+    this.generateHash();
+    const finalMultiplier = this.calculateMultiplier();
+
+    return finalMultiplier;
+  }
+
+  public getState() {
+    return this.multiplierState;
   }
 }

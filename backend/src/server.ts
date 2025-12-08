@@ -1,11 +1,5 @@
-import { MultiplierGenerator } from "./services/game/multiplier_generator";
+import { MultiplierSimulator } from "./services/game/multiplier/multiplier_simulator";
 
-console.log("Velox server");
+const multiplier_simulator = new MultiplierSimulator();
 
-const multiplier = new MultiplierGenerator();
-
-multiplier.generatedServerSeed();
-multiplier.generateFinalResults({
-  clientSeed: "hellothere    ",
-  clientSeedDetails: [],
-});
+multiplier_simulator.runSimulation(100);
