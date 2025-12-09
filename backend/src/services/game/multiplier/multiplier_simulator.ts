@@ -126,8 +126,6 @@ export class MultiplierSimulator {
     const averageMultiplier = this.calculateAverage(allMultipliers);
     const medianMultiplier = this.calculateMedian(allMultipliers);
 
-    console.log(allMultipliers);
-
     return {
       distribution,
       minMultiplierHit: minMultiplierHit === Infinity ? 0 : minMultiplierHit,

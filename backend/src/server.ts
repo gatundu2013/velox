@@ -1,5 +1,3 @@
-import { MultiplierSimulator } from "./services/game/multiplier/multiplier_simulator";
+import { initServer } from "./app";
 
-const multiplier_simulator = new MultiplierSimulator();
-
-multiplier_simulator.runSimulation(100);
+initServer();
